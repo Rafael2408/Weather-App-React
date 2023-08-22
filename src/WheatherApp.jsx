@@ -8,6 +8,7 @@ export const WheatherApp = () => {
 
     const [ciudad, setCiudad] = useState('')
     const [dataClima, setDataClima] = useState(null)
+    const [busqueda, setBusqueda] = useState(false)
 
     const handleCambioCiudad = (e) => {
         setCiudad(e.target.value)
@@ -21,8 +22,16 @@ export const WheatherApp = () => {
     const fetchClima = async() => {
         try {
             const response = await fetch(`${urlBase}?q=${ciudad}&appid=${API_KEY}`)
-            const data = await response.json()
-            setDataClima(data)
+            console.log(response)
+            if(response.ok) { 
+                const data = await response.json()
+                setDataClima(data) 
+                setBusqueda(true) 
+            } else { 
+                setBusqueda(true)
+                setDataClima(null)
+                throw new Error('La ciudad no existe o hubo un problema con el servidor')
+            }
         } catch (error) {
             console.log(error)
         }
@@ -43,7 +52,9 @@ export const WheatherApp = () => {
                 <button type="submit">Search</button>
             </form>
             {
-                dataClima && (
+                
+            
+                dataClima? (
                     <div>
                         <h2>{dataClima.name}, {dataClima.sys.country}</h2>
                         <p>Temperature: {parseInt(dataClima?.main?.temp - difkelvin)+1}°C</p>
@@ -53,7 +64,17 @@ export const WheatherApp = () => {
                         
                         <img src={`https://openweathermap.org/img/wn/${dataClima.weather[0].icon}@2x.png`} alt="" />
                     </div>
-                )
+                ) : (
+                    busqueda ? (
+                       <>
+                            <div>
+                                <h2>Not Found!</h2>
+                                <img src="./siteError.png" alt="" />
+                                <h3>Try to search with another city name</h3>
+                            </div>
+                       </>
+                    ) : (<></>)
+                ) 
             }
         </div>
     )
