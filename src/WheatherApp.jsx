@@ -1,50 +1,21 @@
 import { useState } from "react"
-
 // assests imports  (img/video/etc)
 import siteErrorImage from './assets/siteError.png';
+import { Request } from "./hooks/Request";
 
 export const WheatherApp = () => {
-
-    const urlBase = 'https://api.openweathermap.org/data/2.5/weather'
-    const API_KEY = '6d865e81fe17b3b87cbee028665e99c6'
     const difkelvin = 273.15
-
     const [ciudad, setCiudad] = useState('')
-    const [dataClima, setDataClima] = useState(null)
-    const [busqueda, setBusqueda] = useState(false)
-
     const handleCambioCiudad = (e) => {
         setCiudad(e.target.value)
     }
 
-    const handleSubmitCiudad = (e) => {
-        e.preventDefault()
-        if (ciudad.length > 0) fetchClima()
-    }
-
-    const fetchClima = async () => {
-        try {
-            const response = await fetch(`${urlBase}?q=${ciudad}&appid=${API_KEY}`)
-            if (response.ok) {
-                const data = await response.json()
-                setDataClima(data)
-                setBusqueda(true)
-            } else {
-                setBusqueda(true)
-                setDataClima(null)
-                throw new Error('La ciudad no existe o hubo un problema con el servidor')
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const {dataClima, busqueda, handleSubmitCiudad} = Request()
 
     return (
         <div className="container flex-fill">
-
             <h1>Weather App</h1>
-
-            <form onSubmit={handleSubmitCiudad}>
+            <form onSubmit={(event) => handleSubmitCiudad(event, ciudad)}>
                 <input
                     type="text"
                     value={ciudad}
@@ -54,8 +25,6 @@ export const WheatherApp = () => {
                 <button type="submit">Search</button>
             </form>
             {
-
-
                 dataClima ? (
                     <div>
                         <h2>{dataClima.name}, {dataClima.sys.country}</h2>
