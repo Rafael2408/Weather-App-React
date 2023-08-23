@@ -22,7 +22,6 @@ export const WheatherApp = () => {
     const fetchClima = async() => {
         try {
             const response = await fetch(`${urlBase}?q=${ciudad}&appid=${API_KEY}`)
-            console.log(response)
             if(response.ok) { 
                 const data = await response.json()
                 setDataClima(data) 
@@ -38,7 +37,7 @@ export const WheatherApp = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container flex-fill">
         
             <h1>Weather App</h1>
 

@@ -1,5 +1,4 @@
 /* Estilos generales */
-
 body {
     height: 100vh;
     font-family: Arial, sans-serif;
@@ -58,8 +57,11 @@ body {
     transform: scale(1.2);
   }
   
+  h1{
+    font-size: 45px;
+  }
   h2 {
-    font-size: 20px;
+    font-size: 30px;
     margin-bottom: 10px;
   }
   h3,h2{
@@ -72,6 +74,7 @@ body {
   p {
     margin-bottom: 5px;
     transition: all 0.4s;
+    font-size: 20px;
   }
   p:hover{
     transform: scale(1.2);
