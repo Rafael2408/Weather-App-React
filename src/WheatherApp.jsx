@@ -1,5 +1,8 @@
 import { useState } from "react"
 
+// assests imports  (img/video/etc)
+import siteErrorImage from './assets/siteError.png';
+
 export const WheatherApp = () => {
 
     const urlBase = 'https://api.openweathermap.org/data/2.5/weather'
@@ -16,17 +19,17 @@ export const WheatherApp = () => {
 
     const handleSubmitCiudad = (e) => {
         e.preventDefault()
-        if(ciudad.length > 0) fetchClima()
+        if (ciudad.length > 0) fetchClima()
     }
 
-    const fetchClima = async() => {
+    const fetchClima = async () => {
         try {
             const response = await fetch(`${urlBase}?q=${ciudad}&appid=${API_KEY}`)
-            if(response.ok) { 
+            if (response.ok) {
                 const data = await response.json()
-                setDataClima(data) 
-                setBusqueda(true) 
-            } else { 
+                setDataClima(data)
+                setBusqueda(true)
+            } else {
                 setBusqueda(true)
                 setDataClima(null)
                 throw new Error('La ciudad no existe o hubo un problema con el servidor')
@@ -38,12 +41,12 @@ export const WheatherApp = () => {
 
     return (
         <div className="container flex-fill">
-        
+
             <h1>Weather App</h1>
 
             <form onSubmit={handleSubmitCiudad}>
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     value={ciudad}
                     onChange={handleCambioCiudad}
                     placeholder="Input only your city"
@@ -51,29 +54,30 @@ export const WheatherApp = () => {
                 <button type="submit">Search</button>
             </form>
             {
-                
-            
-                dataClima? (
+
+
+                dataClima ? (
                     <div>
                         <h2>{dataClima.name}, {dataClima.sys.country}</h2>
-                        <p>Temperature: {parseInt(dataClima?.main?.temp - difkelvin)+1}°C</p>
+                        <p>Temperature: {parseInt(dataClima?.main?.temp - difkelvin) + 1}°C</p>
                         <p>Weather condition: {dataClima.weather[0].description}</p>
                         <p>Latitude: {dataClima.coord.lat}</p>
                         <p>Longitude: {dataClima.coord.lon}</p>
-                        
+
                         <img src={`https://openweathermap.org/img/wn/${dataClima.weather[0].icon}@2x.png`} alt="" />
                     </div>
                 ) : (
                     busqueda ? (
-                       <>
+                        <>
                             <div>
                                 <h2>Not Found!</h2>
-                                <img src="./siteError.png" alt="" />
+                                <img src={siteErrorImage} alt="" />  
+                                {/* //  use {image} ↑↑*/}
                                 <h3>Try to search with another city name</h3>
                             </div>
-                       </>
+                        </>
                     ) : (<></>)
-                ) 
+                )
             }
         </div>
     )
