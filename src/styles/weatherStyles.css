@@ -89,6 +89,21 @@ body {
   img:hover{
     transform: scale(1.3);
   }
+
+  #data{
+    animation: fadein 1.5s;
+  }
+  @keyframes fadein {
+    0% {
+        opacity:0;
+    }
+    50%{
+        opacity:0.5;
+    }
+    100% {
+        opacity:1;
+    }
+  }
   
   /* Estilos para móviles */
   @media (max-width: 600px) {

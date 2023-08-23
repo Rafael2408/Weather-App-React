@@ -24,7 +24,8 @@ export const WheatherApp = () => {
                 />
                 <button type="submit">Search</button>
             </form>
-            {
+            <div id="data">
+                {
                 dataClima ? (
                     <div>
                         <h2>{dataClima.name}, {dataClima.sys.country}</h2>
@@ -48,6 +49,7 @@ export const WheatherApp = () => {
                     ) : (<></>)
                 )
             }
+            </div>
         </div>
     )
 }
